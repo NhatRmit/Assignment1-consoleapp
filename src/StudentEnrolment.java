@@ -9,7 +9,7 @@ public class StudentEnrolment {
         course = null;
     }
     
-    public StudentEnrolment(String semester, Student student, Course course){
+    public StudentEnrolment(Student student, Course course, String semester){
         this.semester = semester;
         this.student = student;
         this.course = course;

@@ -4,26 +4,45 @@ import java.io.FileReader;
 import java.io.IOException;
 
 class EnrolmentManager implements StudentEnrolmentManager {
-    private ArrayList<Student> studentList;
-    private ArrayList<Course> courseList;
-    private ArrayList<StudentEnrolment> enrolmentList;
+    private ArrayList<Student> studentList = new ArrayList<>();
+    private ArrayList<Course> courseList = new ArrayList<>();
+    private ArrayList<StudentEnrolment> enrolmentList = new ArrayList<>();
 
-    public ArrayList<Student> readStudentData() {
-        ArrayList<Student> studentData = new ArrayList<Student>();
+    public ArrayList<Student> getStudentList() {
+        return studentList;
+    }
+
+    public ArrayList<StudentEnrolment> getEnrolmentList() {
+        return enrolmentList;
+    }
+
+    public void addStudent(Student s){
+        studentList.add(s);
+    }
+
+    public void addCourse(Course c) {
+        courseList.add(c);
+    }
+
+    public void addEnrolmentList(StudentEnrolment se){
+        enrolmentList.add(se);
+    }
+
+    public void readData() {
         try {
             String line = "";
             String splitBy = ",";
-            BufferedReader br = new BufferedReader(new FileReader("src/studentData.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("src/default.csv"));
             while ((line = br.readLine()) != null) {
                 String[] tempStudent = line.split(splitBy);
-                studentData.add(new Student(tempStudent[0], tempStudent[1], tempStudent[2]));
+                addStudent(new Student(tempStudent[0], tempStudent[1], tempStudent[2]));
+                addCourse(new Course(tempStudent[3], tempStudent[4], tempStudent[5]));
+                addEnrolmentList(new StudentEnrolment(new Student(tempStudent[0], tempStudent[1], tempStudent[2]), new Course(tempStudent[3], tempStudent[4], tempStudent[5]), new String(tempStudent[6])));
             }
         } catch (Exception e) {
             System.out.println("Error Function");
             e.printStackTrace();
         }
-
-        return studentData;
     }
 
     public ArrayList<Course> readCourseData() {
@@ -42,12 +61,6 @@ class EnrolmentManager implements StudentEnrolmentManager {
         }
 
         return courseData;
-    }
-
-    public void printTest() {
-        for (Student student : readStudentData()) {
-            System.out.println(student.toString());
-        }
     }
 
     @Override
@@ -78,6 +91,10 @@ class EnrolmentManager implements StudentEnrolmentManager {
     public void getAll() {
         // TODO Auto-generated method stub
 
+    }
+
+    public Object[] getCourseList() {
+        return null;
     }
 
 }
