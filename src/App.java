@@ -1,15 +1,20 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
         EnrolmentManager em = new EnrolmentManager();
         em.readData();
-        for(StudentEnrolment s : em.getEnrolmentList()){
+        for(Student s : em.getStudentList()){
             System.out.println(s);
         }
+        System.out.println("------------");
+        for(Course c : em.getCourseList()){
+            System.out.println(c);
+        }
+        System.out.println("------------");
+        for(StudentEnrolment se : em.getEnrolmentList()){
+            System.out.println(se);
+        }
+
     }
 }

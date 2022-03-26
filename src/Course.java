@@ -1,15 +1,15 @@
 public class Course {
     private String id;
     private String name;
-    private String credits;
+    private int credits;
 
     public Course(){
         id = "0000";
         name = "default";
-        credits = "######";
+        credits = 0;
     }
 
-    public Course(String id, String name, String credits){
+    public Course(String id, String name, int credits){
         this.id = id;
         this.name = name;
         this.credits = credits;
@@ -23,7 +23,12 @@ public class Course {
         return name;
     }
 
-    public String getCredits() {
+    public int getCredits() {
         return credits;
+    }
+
+    @Override
+    public String toString(){
+        return id + " " + name + " " + credits;
     }
 }

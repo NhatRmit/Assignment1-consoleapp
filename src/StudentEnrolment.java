@@ -39,6 +39,9 @@ public class StudentEnrolment {
         return semester;
     }
 
-    
+    @Override
+    public String toString(){
+        return student.toString() + " " + course.toString() + " " + semester;
+    }
 
 }
