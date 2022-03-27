@@ -8,7 +8,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayList<Course> courseList = new ArrayList<>();
     private ArrayList<StudentEnrolment> enrolmentList = new ArrayList<>();
-    private StudentEnrolment studentEnrolment;
+    private StudentEnrolment studentEnrolment = new StudentEnrolment();
 
     public ArrayList<Student> getStudentList() {
         return studentList;
@@ -68,9 +68,9 @@ class EnrolmentManager implements StudentEnrolmentManager {
         }
     }
 
-    public boolean isDigits(String str) {
-        for(int i = 0; i < str.length();) {
-            if (str.charAt(i) >= '0'
+    public boolean isDigit(String str) {
+        for(int i = 1; i < str.length();) {
+            if (str.charAt(i) >= '1'
                 && str.charAt(i) <= '9') {
                 return true;
             }
@@ -81,84 +81,99 @@ class EnrolmentManager implements StudentEnrolmentManager {
         return false;
     }
 
-    public boolean isStudentValid(String inputCheck){
-        for(Student student : studentList) {
-            if(student.getId().equalsIgnoreCase(inputCheck)){
-                studentEnrolment.setStudent(student);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isCourseValid(String inputCheck){
-        for(Course course : courseList){
-            if(!(inputCheck.contains(" "))){
-                if(course.getId().equalsIgnoreCase(inputCheck)){
-                    studentEnrolment.setCourse(course);
-                    return true;
-                }
-            } else {
-                if(course.getName().equalsIgnoreCase(inputCheck)){
-                    studentEnrolment.setCourse(course);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public boolean isNotValid(String inputCheck) {
-        if(inputCheck.startsWith("S") && isDigits(inputCheck)) {
-            isStudentValid(inputCheck);
+        if((inputCheck.startsWith("S") || inputCheck.startsWith("s")) && isDigit(inputCheck)) {
+            for(Student student : studentList) {
+                if((student.getId()).equalsIgnoreCase(inputCheck)){
+                    studentEnrolment.setStudent(student);
+                    return true;
+                } else {
+                    System.out.println("aaaa");
+                }
+            }
+            return false;
         } else {
-            isCourseValid(inputCheck);
-        }   
-        return false;
+            for(Course course : courseList){
+                if(!(inputCheck.contains(" "))){
+                    if(course.getId().equalsIgnoreCase(inputCheck)){
+                        studentEnrolment.setCourse(course);
+                        return true;
+                    }
+                } else {
+                    if(course.getName().equalsIgnoreCase(inputCheck)){
+                        studentEnrolment.setCourse(course);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 
     @Override
     public void add() {
-        String studentID;
-        String courseID;
-        String semester;
+        String studentID, courseID, semester;
 
         do{
             System.out.println("Enter studentID: ");
             studentID = scanner.nextLine();
-            
-        } while (isNotValid(studentID));
+        } while (!isNotValid(studentID));
 
         do{
             System.out.println("Enter courseID: ");
             courseID = scanner.nextLine();
-            
-        } while (isNotValid(courseID));
+        } while (!isNotValid(courseID));
 
-        System.out.println("Enter semester");
-        semester = scanner.nextLine();
+        do {
+            System.out.println("Enter semester");
+            semester = scanner.nextLine();
+            studentEnrolment.setSemester(semester);
+        } while (false);
 
-        studentEnrolment.setSemester(semester);
         enrolmentList.add(studentEnrolment);
-
-
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-
+        //cu the 1 đứa trong 1 semester
     }
 
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
+        String studentID, courseID;
+        ArrayList<StudentEnrolment> tempList = new ArrayList<>();
+
+        for(StudentEnrolment se : enrolmentList){
+            System.out.println(se);
+        }
+
+        do{
+            System.out.println("Enter studentID: ");
+            studentID = scanner.nextLine();
+        } while (!isNotValid(studentID));
+
+        for(StudentEnrolment se : enrolmentList){
+            if(((se.getStudent()).getId()).equalsIgnoreCase(studentID)){
+                tempList.add(se);
+                System.out.println(se);
+            }
+        }
+
+        do{
+            System.out.println("Enter courseID: ");
+            courseID = scanner.nextLine();
+        } while (!isNotValid(courseID));
+
+        for(StudentEnrolment se : tempList){
+            if(((se.getCourse()).getId()).equalsIgnoreCase(courseID)){
+                enrolmentList.remove(se);
+            }
+        }
 
     }
 
     @Override
     public void getOne() {
-        // TODO Auto-generated method stub
 
     }
 
