@@ -15,6 +15,7 @@ public class App {
         for(StudentEnrolment se : em.getEnrolmentList()){
             System.out.println(se);
         }
-
+        
+        em.add();
     }
 }
