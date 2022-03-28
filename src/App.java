@@ -8,7 +8,12 @@ public class App {
         // System.out.println("------------");
         // for(StudentEnrolment se : em.getEnrolmentList()){
         //     System.out.println(se);
-        // }
+        
         em.delete();
+        // em.update();
+         System.out.println("------------");
+        for(StudentEnrolment se : em.getEnrolmentList()){
+            System.out.println(se);
+        }
     }
 }
