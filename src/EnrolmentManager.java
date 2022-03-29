@@ -1,7 +1,11 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 class EnrolmentManager implements StudentEnrolmentManager {
     final String ADDORDELETE = "addOrDelete";
@@ -77,7 +81,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
         }
     }
 
-    public Student verifyStudent(String inputCheck){
+    public Student verifyStudent(String inputCheck) {
         for(Student student : studentList) {
             if((student.getId()).equalsIgnoreCase(inputCheck)){
                 return student;
@@ -169,60 +173,6 @@ class EnrolmentManager implements StudentEnrolmentManager {
         return false;
     }
 
-    // public void deleteCourse(Student student, Course course, String semester){
-    //     StudentEnrolment getOne = getOne();
-    //     if(getOne != null) {
-    //         // for(StudentEnrolment se : enrolmentList){
-    //         //     if(((se.getCourse()).getId()).equalsIgnoreCase(course.getId()) && 
-    //         //         (se.getStudent().getId().equalsIgnoreCase(student.getId())) && 
-    //         //         (se.getSemester().equalsIgnoreCase(semester))){
-                        
-    //         //             printInfo(REMOVESUCCESSFULLY);
-    //         //             return;
-    //         //     }
-    //         // }
-    //         enrolmentList.remove(getOne);
-    //     } else {
-    //         System.out.println("There is any course to remove");
-    //     }
-    // }
-    
-    public void printAllStudInCouInSem(Course course, String semester){
-        System.out.println("All of the student of " + 
-                            course.getName() + 
-                            " in semester " + 
-                            semester);
-
-        for(StudentEnrolment se : enrolmentList){
-            if(se.getCourse().getId().equalsIgnoreCase(course.getId()) && 
-                se.getSemester().equalsIgnoreCase(semester)){
-                System.out.println(se.getStudent());
-            }
-        }    
-    }
-
-    public void printAllCouOfStudInSem(Student student, String semester){
-        System.out.println("All of the course of " + 
-                            student.getName() + 
-                            " in semester " + 
-                            semester);
-
-        for(StudentEnrolment se : enrolmentList){
-            if(se.getStudent().getId().equalsIgnoreCase(student.getId()) && 
-                se.getSemester().equalsIgnoreCase(semester)){
-                System.out.println(se.getCourse());
-            }
-        }
-    }    
-    
-    public void printAllCouOfferedInSem(String semester){
-        for(StudentEnrolment se : enrolmentList){
-            if(se.getSemester().equalsIgnoreCase(semester)){
-                System.out.println(se.getCourse());
-            }
-        }
-    }
-
     public void addDetail(Student student, Course course, String semester){
         if(getOne(student, course, semester) == null){
             enrolmentList.add(new StudentEnrolment(student, course, semester));
@@ -306,7 +256,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
         }
     }
 
-    public void printAll(){
+    public void printAll() {
         String option;
         do {
             printInfo(PRINTALLOPTION);
@@ -327,5 +277,139 @@ class EnrolmentManager implements StudentEnrolmentManager {
         } while (!option.equals(OPTIONONE) &&
                 !option.equals(OPTIONTWO) &&
                 !option.equals(OPTIONTHREE));
+    }
+
+    
+    public void convertAllStudInCouInSemCSV(ArrayList<Student> studentPrint, Course course, String semester){
+        FileWriter file = null;
+        try {
+            file = new FileWriter("src/allStudInCouInSem.csv");
+            //Add a new line after the header
+            file.append("\n");
+            //Iterate through bookList
+            Iterator<Student> it = studentPrint.iterator();
+            file.append("All of the student of " + 
+            course.getName() + 
+            " in semester " + 
+            semester);
+            while(it.hasNext())
+            {
+                Student s = (Student)it.next();
+                file.append(s.getId());
+                file.append(",");
+                file.append(s.getName());
+                file.append(",");
+                file.append(s.getBirthdate());
+                file.append(",");
+                file.append("\n");
+            }
+            
+            file.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void printAllStudInCouInSem(Course course, String semester){
+        System.out.println("All of the student of " + 
+                            course.getName() + 
+                            " in semester " + 
+                            semester);
+        ArrayList<Student> tempPrint = new ArrayList<>();
+        for(StudentEnrolment se : enrolmentList){
+            if(se.getCourse().getId().equalsIgnoreCase(course.getId()) && 
+                se.getSemester().equalsIgnoreCase(semester)){
+                System.out.println(se.getStudent());
+                tempPrint.add(se.getStudent());
+            }
+        }   
+        convertAllStudInCouInSemCSV(tempPrint, course, semester); 
+    }
+
+    public void convertAllCouOfStudInSemCSV(ArrayList<Course> coursePrint, Student student, String semester){
+        FileWriter file = null;
+        try {
+            file = new FileWriter("src/allCouOfStudInSem.csv");
+            //Add a new line after the header
+            file.append("\n");
+            //Iterate through bookList
+            Iterator<Course> it = coursePrint.iterator();
+            file.append("All of the course of " + 
+            student.getName() + 
+            " in semester " + 
+            semester);
+            while(it.hasNext())
+            {
+                Course c = (Course)it.next();
+                file.append(c.getId());
+                file.append(",");
+                file.append(c.getName());
+                file.append(",");
+                file.append(String.valueOf(c.getCredits()));
+                file.append(",");
+                file.append("\n");
+            }
+            
+            file.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void printAllCouOfStudInSem(Student student, String semester){
+        System.out.println("All of the course of " + 
+                            student.getName() + 
+                            " in semester " + 
+                            semester);
+        ArrayList<Course> tempPrint = new ArrayList<>();
+        for(StudentEnrolment se : enrolmentList){
+            if(se.getStudent().getId().equalsIgnoreCase(student.getId()) && 
+                se.getSemester().equalsIgnoreCase(semester)){
+                System.out.println(se.getCourse());
+                tempPrint.add(se.getCourse());
+            }
+        }
+        convertAllCouOfStudInSemCSV(tempPrint, student, semester);
+    }    
+
+    public void convertAllCouOfferedInSemCSV(Set<Course> course, String semester){
+        FileWriter file = null;
+        try {
+            file = new FileWriter("src/allCouOfferedInSem.csv");
+            //Add a new line after the header
+            file.append("\n");
+            //Iterate through bookList
+            Iterator<Course> it = course.iterator();
+            file.append("All of the course offered in semester " + semester);
+            while(it.hasNext())
+            {
+                Course c = (Course)it.next();
+                file.append(c.getId());
+                file.append(",");
+                file.append(c.getName());
+                file.append(",");
+                file.append(String.valueOf(c.getCredits()));
+                file.append(",");
+                file.append("\n");
+            }
+            
+            file.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void printAllCouOfferedInSem(String semester){
+        Set<Course> tempList = new HashSet<>();
+        System.out.println("All of the course offered in semester " + semester);
+        for(StudentEnrolment se : enrolmentList){
+            if(se.getSemester().equalsIgnoreCase(semester)){
+                tempList.add(se.getCourse());
+            }
+        } 
+        for(Course c : tempList) {
+            System.out.println(c);
+        }
+        convertAllCouOfferedInSemCSV(tempList, semester);
     }
 }
