@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.Set;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -284,14 +282,13 @@ class EnrolmentManager implements StudentEnrolmentManager {
         FileWriter file = null;
         try {
             file = new FileWriter("src/allStudInCouInSem.csv");
-            //Add a new line after the header
-            file.append("\n");
-            //Iterate through bookList
             Iterator<Student> it = studentPrint.iterator();
             file.append("All of the student of " + 
             course.getName() + 
             " in semester " + 
             semester);
+            file.append("\n");
+
             while(it.hasNext())
             {
                 Student s = (Student)it.next();
@@ -330,14 +327,12 @@ class EnrolmentManager implements StudentEnrolmentManager {
         FileWriter file = null;
         try {
             file = new FileWriter("src/allCouOfStudInSem.csv");
-            //Add a new line after the header
-            file.append("\n");
-            //Iterate through bookList
             Iterator<Course> it = coursePrint.iterator();
             file.append("All of the course of " + 
             student.getName() + 
             " in semester " + 
             semester);
+            file.append("\n");
             while(it.hasNext())
             {
                 Course c = (Course)it.next();
@@ -372,15 +367,13 @@ class EnrolmentManager implements StudentEnrolmentManager {
         convertAllCouOfStudInSemCSV(tempPrint, student, semester);
     }    
 
-    public void convertAllCouOfferedInSemCSV(Set<Course> course, String semester){
+    public void convertAllCouOfferedInSemCSV(ArrayList<Course> course, String semester){
         FileWriter file = null;
         try {
             file = new FileWriter("src/allCouOfferedInSem.csv");
-            //Add a new line after the header
-            file.append("\n");
-            //Iterate through bookList
             Iterator<Course> it = course.iterator();
             file.append("All of the course offered in semester " + semester);
+            file.append("\n");
             while(it.hasNext())
             {
                 Course c = (Course)it.next();
@@ -400,16 +393,28 @@ class EnrolmentManager implements StudentEnrolmentManager {
     }
     
     public void printAllCouOfferedInSem(String semester){
-        Set<Course> tempList = new HashSet<>();
+        ArrayList<Course> tempList = new ArrayList<>();
         System.out.println("All of the course offered in semester " + semester);
+
         for(StudentEnrolment se : enrolmentList){
-            if(se.getSemester().equalsIgnoreCase(semester)){
-                tempList.add(se.getCourse());
+            if(se.getSemester().equalsIgnoreCase(semester)) {
+                Course c = new Course(se.getCourse().getId(), se.getCourse().getName(), se.getCourse().getCredits());
+                if(isCourseNotDuplicated(tempList, c)){
+                    tempList.add(c);
+                    System.out.println(c);
+                }
             }
         } 
-        for(Course c : tempList) {
-            System.out.println(c);
-        }
+
         convertAllCouOfferedInSemCSV(tempList, semester);
+    }
+
+    public boolean isCourseNotDuplicated(ArrayList<Course> tempList, Course c){
+        for(Course course : tempList) {
+            if(course.getId().equalsIgnoreCase(c.getId())){
+                return false;
+            }
+        }
+        return true;
     }
 }
