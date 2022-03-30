@@ -28,7 +28,8 @@ public class Menu {
                 case OPTIONONE:
                     student = enrolmentManager.getInputStudent();
                     semester = enrolmentManager.getInputSemester();
-                    enrolmentManager.add(student, semester);
+                    course = enrolmentManager.getInputCourse();
+                    enrolmentManager.add(student, semester, course);
                     break;
                 case OPTIONTWO:
                     student = enrolmentManager.getInputStudent();
@@ -38,7 +39,8 @@ public class Menu {
                 case OPTIONTHREE:
                     student = enrolmentManager.getInputStudent();
                     semester = enrolmentManager.getInputSemester();
-                    enrolmentManager.add(student, semester);    
+                    
+                    enrolmentManager.delete(student, semester);    
                     break;
                 case OPTIONFOUR:
                     student = enrolmentManager.getInputStudent();
