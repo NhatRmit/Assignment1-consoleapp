@@ -16,37 +16,68 @@ public class Menu {
     EnrolmentManager enrolmentManager = new EnrolmentManager();
 
     public void printMenu(){
-        String option, optionData;
+        String option, optionData, semester;
         Student student;
-        String semester;
         Course course;
-        enrolmentManager.readData();
+        System.out.println("Enter file csv");
+        enrolmentManager.readData(scanner.nextLine());
+        
         do{
             enrolmentManager.printInfo(MENUOPTION);
             option = scanner.nextLine();
             switch (option) {
                 case OPTIONONE:
-                    student = enrolmentManager.getInputStudent();
-                    semester = enrolmentManager.getInputSemester();
-                    course = enrolmentManager.getInputCourse();
-                    enrolmentManager.add(student, semester, course);
+                    enrolmentManager
+                        .add(
+                            enrolmentManager.getInputStudent(), 
+                            enrolmentManager.getInputCourse(), 
+                            enrolmentManager.getInputSemester()
+                        );
                     break;
                 case OPTIONTWO:
                     student = enrolmentManager.getInputStudent();
                     semester = enrolmentManager.getInputSemester();
-                    enrolmentManager.update(student, semester);
+                    if(enrolmentManager.isExistInEnrolmentList(student, semester)){
+                        enrolmentManager.printInfo(enrolmentManager.ADDORDELETE);
+                        String opt;
+                        do{
+                            System.out.println("Enter option");
+                            opt = scanner.nextLine();
+                            switch(opt){
+                                case OPTIONONE:
+                                    System.out.println("Which course you want to add?");
+                                    course = enrolmentManager.getInputCourse();
+                                    enrolmentManager.update(student, course, semester, opt);
+                                    break;
+                                case OPTIONTWO:
+                                    System.out.println("Which course you want to delete?");
+                                    course = enrolmentManager.getInputCourse();
+                                    enrolmentManager.update(student, course, semester, opt);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } while (!opt.equals(OPTIONONE) &&
+                                !opt.equals(OPTIONTWO));
+                    } else {
+                        enrolmentManager.printInfo(INVALIDDATA);
+                    }
                     break;
                 case OPTIONTHREE:
-                    student = enrolmentManager.getInputStudent();
-                    semester = enrolmentManager.getInputSemester();
-                    
-                    enrolmentManager.delete(student, semester);    
+                    enrolmentManager
+                        .delete(
+                            enrolmentManager.getInputStudent(), 
+                            enrolmentManager.getInputCourse(), 
+                            enrolmentManager.getInputSemester()
+                        );
                     break;
                 case OPTIONFOUR:
-                    student = enrolmentManager.getInputStudent();
-                    semester = enrolmentManager.getInputSemester();
-                    course = enrolmentManager.getInputCourse();
-                    enrolmentManager.getOne(student, course, semester);
+                    enrolmentManager
+                        .getOne(
+                            enrolmentManager.getInputStudent(), 
+                            enrolmentManager.getInputCourse(),
+                            enrolmentManager.getInputSemester()
+                        );
                     break;
                 case OPTIONFIVE:
                     enrolmentManager.getAll();
@@ -57,18 +88,24 @@ public class Menu {
                     do{
                         switch (optionData) {
                             case OPTIONONE:
-                                student = enrolmentManager.getInputStudent();
-                                semester = enrolmentManager.getInputSemester();
-                                enrolmentManager.printAllCouOfStudInSem(student, semester);
+                                enrolmentManager
+                                    .printAllCouOfStudInSem(
+                                        enrolmentManager.getInputStudent(),
+                                        enrolmentManager.getInputSemester()
+                                    );
                                 break;
                             case OPTIONTWO:
-                                course = enrolmentManager.getInputCourse();
-                                semester = enrolmentManager.getInputSemester();
-                                enrolmentManager.printAllStudInCouInSem(course, semester);
+                                enrolmentManager
+                                    .printAllStudInCouInSem(
+                                        enrolmentManager.getInputCourse(), 
+                                        enrolmentManager.getInputSemester()
+                                    );
                                 break;
                             case OPTIONTHREE:
-                                semester = enrolmentManager.getInputSemester();
-                                enrolmentManager.printAllCouOfferedInSem(semester);
+                                enrolmentManager
+                                    .printAllCouOfferedInSem(
+                                        enrolmentManager.getInputSemester()
+                                    );
                                 break;
                             default:
                                 break;

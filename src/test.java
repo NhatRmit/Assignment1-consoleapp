@@ -3,7 +3,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 class EnrolmentManagerTest {
 
@@ -11,55 +10,135 @@ class EnrolmentManagerTest {
 
     @BeforeAll
     static void beforeAll() throws FileNotFoundException {
-        //Open Default File
-        enrolment.readData();
+        enrolment.readData("default");
+        
     }
 
     @Test
     void testAdd() {
-
-        // System.out.println("Test Add");
-
-        // Test Case: Enrolment Available
-        Student sID = new Student();
-        Course cID = new Course();
-        // StudentEnrolment se = new StudentEnrolment(enrolment.isStudentValid(sID), enrolment.isCourseValid(cID), "2020C");
-        // Assertions.assertEquals(false, enrolment.add(se));
-
-        // Test Case: Enrolment Not Available
-        // sID = "S101312";
-        // cID = "COSC3321";
-        // se = new StudentEnrolment(enrolment.isStudentValid(sID), enrolment.isCourseValid(cID), "2020C");
-        // Assertions.assertEquals(true, enrolment.add(se));
         System.out.println("Test Add");
-        // Test Case: Enrolment Available
-        ArrayList<StudentEnrolment> listTest =  enrolment.getEnrolmentList();
-        int sizeListBefore;
-        sizeListBefore = listTest.size() + 1;
+        String studentID, courseID, semester;
+        StudentEnrolment se;
 
-        enrolment.add(sID, "2020C", cID);
-        Assertions.assertEquals(sizeListBefore, listTest.size());
+        // Test Case: Enrolled Successfully
+        studentID = "s101312";
+        courseID = "cosc3321";
+        semester = "2020C";
+
+        enrolment.add(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(false, !enrolment.getEnrolmentList().contains(se));
+
+
+        //Test Case: Enrolled Already
+    //     studentID = "s101312";
+    //     courseID = "bus2232";
+    //     semester = "2020C";
+    //     enrolment.add(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+    //     se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+    //     Assertions.assertEquals(true, enrolment.getEnrolmentList().contains(se));
     }
 
-    // @Test
-    // void testUpdate() {
+    @Test
+    void testUpdate() {
+        System.out.println("Test Update");
+        String studentID, courseID, semester, option;
+        StudentEnrolment se;
 
-    //     System.out.println("Test Update");
+        // Test Case: Updated Successfully 
+        //(Add New)
+        option = "1";
+        studentID = "s101312";
+        courseID = "cosc3321";
+        semester = "2020C";
+        enrolment.update(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester, option);
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(false, !enrolment.getEnrolmentList().contains(se));
 
-    //     // Test Case: Update Successfully
-    //     String sID = "S101312";
-    //     String cID = "COSC3321";
-    //     Assertions.assertEquals(true, enrolment.update(enrolment.isStudentValid(sID), enrolment.isCourseValid(cID), "2020C"));
+        //(Delete)
+        option = "2";
+        studentID = "s101312";
+        courseID = "bus2232";
+        semester = "2020C";
+        enrolment.update(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester, option);
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(true, !enrolment.getEnrolmentList().contains(se));
 
-    //     // Test Case: Update Unsuccessfully
-    //     sID = "S1010312";
-    //     cID = "COSC4030";
-    //     Assertions.assertEquals(false, enrolment.update(enrolment.isStudentValid(sID), enrolment.isCourseValid(cID), "2020C"));
 
-    // }
+        // Test Case: Updated Unsuccessfully
+        //(Add New)
+        option = "1";
+        studentID = "s101312";
+        courseID = "bus2232";
+        semester = "2020C";
+        enrolment.update(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester, option);
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(true, enrolment.getEnrolmentList().contains(se));
+    
+        //(Delete)
+        option = "2";
+        studentID = "s101312";
+        courseID = "cosc3321";
+        semester = "2020C";
+        enrolment.update(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester, option);
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(false, enrolment.getEnrolmentList().contains(se));
 
-    // @Test
-    // void delete() {
-    // }
+
+    }
+
+    @Test
+    void testDelete() {
+        System.out.println("Test Delete");
+        String studentID, courseID, semester;
+        StudentEnrolment se;        
+        
+        // Test Case: Removed Successfully
+        studentID = "s101312";
+        courseID = "bus2232";
+        semester = "2020C";
+
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        enrolment.delete(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(true, !enrolment.getEnrolmentList().contains(se));
+
+        //Test Case: Removed Unsuccessfully
+        studentID = "s101312";
+        courseID = "cosc3321";
+        semester = "2020C";
+    
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        enrolment.delete(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(false, enrolment.getEnrolmentList().contains(se));
+    }
+
+    @Test
+    void testGetOne(){
+        System.out.println("Test Get One");
+        String studentID, courseID, semester;
+        StudentEnrolment se;        
+
+        //Test Case: Get One Successfully
+        studentID = "s101312";
+        courseID = "bus2232";
+        semester = "2020C";
+
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(true, !enrolment.getEnrolmentList().contains(se));
+
+        //Test Case: Get One Unsuccessfully
+        studentID = "s101312";
+        courseID = "cosc3321";
+        semester = "2020C";
+
+        se = enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        enrolment.getOne(enrolment.verifyStudent(studentID), enrolment.verifyCourse(courseID), semester);
+        Assertions.assertEquals(false, enrolment.getEnrolmentList().contains(se));
+    }
+
+    @Test 
+    void testGetAll(){
+    }
 
 }
