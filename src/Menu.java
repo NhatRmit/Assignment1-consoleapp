@@ -14,7 +14,14 @@ public class Menu {
     String option, optionData, semester;
     Student student;
     Course course;
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void printMenu(){
         System.out.println("Enter file csv");
         enrolmentManager.readData(scanner.nextLine());

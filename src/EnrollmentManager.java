@@ -25,18 +25,46 @@ class EnrollmentManager implements StudentEnrollmentManager {
     private ArrayList<Course> courseList = new ArrayList<>();
     private ArrayList<StudentEnrollment> enrollmentList = new ArrayList<>();
 
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
 
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public ArrayList<StudentEnrollment> getEnrollmentList() {
         return enrollmentList;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public boolean isNotDuplicated(Object object) {
         if (object.getClass().equals(Student.class)) {
             for (Student student : studentList) {
@@ -53,7 +81,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         return true;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void readData(String filecsv) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(DIRECTORY + filecsv + FILETYPE));
@@ -77,7 +112,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void printInfo(String option) {
         switch (option) {
             case MENUOPTION:
@@ -113,7 +155,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
                 break;
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public boolean isExistInEnrollmentList(Student student, String semester) {
         System.out.println("All of the course of " + student.getName() + " in semester " + semester);
         boolean checkExist = true;
@@ -128,7 +177,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         return checkExist;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public Course verifyCourse(String courseID) {
         for (Course c : courseList) {
             if (c.getId().equalsIgnoreCase(courseID)) {
@@ -137,7 +193,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         return null;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public Student verifyStudent(String studentID) {
         for (Student s : studentList) {
             if (s.getId().equalsIgnoreCase(studentID)) {
@@ -146,7 +209,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         return null;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public Student getInputStudent() {
         String studentID;
         Student student;
@@ -157,7 +227,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         } while (student == null);
         return student;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public Course getInputCourse() {
         String courseID;
         Course course;
@@ -168,7 +245,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         } while (course == null);
         return course;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public String getInputSemester() {
         String semester;
         do {
@@ -177,7 +261,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         } while (semester == null);
         return semester;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     @Override
     public void add(Student student, Course course, String semester) {
         if (getOne(student, course, semester) == null) {
@@ -187,7 +278,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             System.out.println("Already been enrolled");
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     @Override
     public void update(Student student, Course course, String semester, String option) {
         switch (option) {
@@ -202,7 +300,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
 
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     @Override
     public void delete(Student student, Course course, String semester) {
         StudentEnrollment getOne = getOne(student, course, semester);
@@ -213,7 +318,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             System.out.println("There is not any course to remove");
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     @Override
     public StudentEnrollment getOne(Student student, Course course, String semester) {
         for (StudentEnrollment se : enrollmentList) {
@@ -225,14 +337,28 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         return null;
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     @Override
     public void getAll() {
         for (StudentEnrollment se : enrollmentList) {
             System.out.println(se);
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void printAllStudInCouInSem(Course course, String semester) {
         System.out.println("All of the student of " + course.getName() + " in semester " + semester);
         ArrayList<Student> tempPrint = new ArrayList<>();
@@ -245,7 +371,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         convertAllStudInCouInSemCSV(tempPrint, course, semester);
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void printAllCouOfStudInSem(Student student, String semester) {
         System.out.println("All of the course of " + student.getName() + " in semester " + semester);
         ArrayList<Course> tempPrint = new ArrayList<>();
@@ -258,7 +391,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         convertAllCouOfStudInSemCSV(tempPrint, student, semester);
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void printAllCouOfferedInSem(String semester) {
         ArrayList<Course> tempList = new ArrayList<>();
         System.out.println("All of the course offered in semester " + semester);
@@ -272,7 +412,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
         }
         convertAllCouOfferedInSemCSV(tempList, semester);
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void convertAllStudInCouInSemCSV(ArrayList<Student> studentPrint, Course course, String semester) {
         FileWriter file = null;
         try {
@@ -296,7 +443,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void convertAllCouOfStudInSemCSV(ArrayList<Course> coursePrint, Student student, String semester) {
         FileWriter file = null;
         try {
@@ -324,7 +478,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * @desc 
+     * @param 
+     * @param 
+     * @return 
+     * @author Nguyen Hoang Minh Nhat - s3765963
+     */
     public void convertAllCouOfferedInSemCSV(ArrayList<Course> course, String semester) {
         FileWriter file = null;
         try {
