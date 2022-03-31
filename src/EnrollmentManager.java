@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-class EnrolmentManager implements StudentEnrolmentManager {
+class EnrollmentManager implements StudentEnrollmentManager {
     final String DELIMITER = ",";
     final String MENUOPTION = "menuOption";
     final String ADDORDELETE = "addOrDelete";
@@ -23,7 +23,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     Scanner scanner = new Scanner(System.in);
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayList<Course> courseList = new ArrayList<>();
-    private ArrayList<StudentEnrolment> enrolmentList = new ArrayList<>();
+    private ArrayList<StudentEnrollment> enrollmentList = new ArrayList<>();
 
     public ArrayList<Student> getStudentList() {
         return studentList;
@@ -33,8 +33,8 @@ class EnrolmentManager implements StudentEnrolmentManager {
         return courseList;
     }
 
-    public ArrayList<StudentEnrolment> getEnrolmentList() {
-        return enrolmentList;
+    public ArrayList<StudentEnrollment> getEnrollmentList() {
+        return enrollmentList;
     }
 
     public boolean isNotDuplicated(Object object) {
@@ -61,7 +61,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
                 String[] tempData = LINE.split(DELIMITER);
                 Student tempNewStudent = new Student(tempData[0], tempData[1], tempData[2]);
                 Course tempNewCourse = new Course(tempData[3], tempData[4], Integer.parseInt(tempData[5]));
-                StudentEnrolment tempStudentEnrolment = new StudentEnrolment(tempNewStudent, tempNewCourse,
+                StudentEnrollment tempStudentEnrollment = new StudentEnrollment(tempNewStudent, tempNewCourse,
                         tempData[6]);
                 if (isNotDuplicated(tempNewStudent)) {
                     studentList.add(tempNewStudent);
@@ -69,7 +69,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
                 if (isNotDuplicated(tempNewCourse)) {
                     courseList.add(tempNewCourse);
                 }
-                enrolmentList.add(tempStudentEnrolment);
+                enrollmentList.add(tempStudentEnrollment);
             }
             br.close();
         } catch (Exception e) {
@@ -114,10 +114,10 @@ class EnrolmentManager implements StudentEnrolmentManager {
         }
     }
 
-    public boolean isExistInEnrolmentList(Student student, String semester) {
+    public boolean isExistInEnrollmentList(Student student, String semester) {
         System.out.println("All of the course of " + student.getName() + " in semester " + semester);
         boolean checkExist = true;
-        for (StudentEnrolment se : enrolmentList) {
+        for (StudentEnrollment se : enrollmentList) {
             if ((se.getSemester().equalsIgnoreCase(semester)) &&
                     (se.getStudent().getId().equalsIgnoreCase(student.getId()))) {
                 System.out.println(se.getCourse());
@@ -181,7 +181,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     @Override
     public void add(Student student, Course course, String semester) {
         if (getOne(student, course, semester) == null) {
-            enrolmentList.add(new StudentEnrolment(student, course, semester));
+            enrollmentList.add(new StudentEnrollment(student, course, semester));
             printInfo(ADDSUCCESSFULLY);
         } else {
             System.out.println("Already been enrolled");
@@ -205,9 +205,9 @@ class EnrolmentManager implements StudentEnrolmentManager {
 
     @Override
     public void delete(Student student, Course course, String semester) {
-        StudentEnrolment getOne = getOne(student, course, semester);
+        StudentEnrollment getOne = getOne(student, course, semester);
         if (getOne != null) {
-            enrolmentList.remove(getOne);
+            enrollmentList.remove(getOne);
             printInfo(REMOVESUCCESSFULLY);
         } else {
             System.out.println("There is not any course to remove");
@@ -215,8 +215,8 @@ class EnrolmentManager implements StudentEnrolmentManager {
     }
 
     @Override
-    public StudentEnrolment getOne(Student student, Course course, String semester) {
-        for (StudentEnrolment se : enrolmentList) {
+    public StudentEnrollment getOne(Student student, Course course, String semester) {
+        for (StudentEnrollment se : enrollmentList) {
             if (se.getStudent().getId().equalsIgnoreCase(student.getId()) &&
                     (se.getCourse().getId().equalsIgnoreCase(course.getId())) &&
                     (se.getSemester().equalsIgnoreCase(semester))) {
@@ -228,7 +228,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
 
     @Override
     public void getAll() {
-        for (StudentEnrolment se : enrolmentList) {
+        for (StudentEnrollment se : enrollmentList) {
             System.out.println(se);
         }
     }
@@ -236,7 +236,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     public void printAllStudInCouInSem(Course course, String semester) {
         System.out.println("All of the student of " + course.getName() + " in semester " + semester);
         ArrayList<Student> tempPrint = new ArrayList<>();
-        for (StudentEnrolment se : enrolmentList) {
+        for (StudentEnrollment se : enrollmentList) {
             if (se.getCourse().getId().equalsIgnoreCase(course.getId()) &&
                     se.getSemester().equalsIgnoreCase(semester)) {
                 System.out.println(se.getStudent());
@@ -249,7 +249,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     public void printAllCouOfStudInSem(Student student, String semester) {
         System.out.println("All of the course of " + student.getName() + " in semester " + semester);
         ArrayList<Course> tempPrint = new ArrayList<>();
-        for (StudentEnrolment se : enrolmentList) {
+        for (StudentEnrollment se : enrollmentList) {
             if (se.getStudent().getId().equalsIgnoreCase(student.getId()) &&
                     se.getSemester().equalsIgnoreCase(semester)) {
                 System.out.println(se.getCourse());
@@ -262,7 +262,7 @@ class EnrolmentManager implements StudentEnrolmentManager {
     public void printAllCouOfferedInSem(String semester) {
         ArrayList<Course> tempList = new ArrayList<>();
         System.out.println("All of the course offered in semester " + semester);
-        for (StudentEnrolment se : enrolmentList) {
+        for (StudentEnrollment se : enrollmentList) {
             if (se.getSemester().equalsIgnoreCase(semester)) {
                 tempList.add(se.getCourse());
             }

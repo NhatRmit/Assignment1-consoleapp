@@ -8,22 +8,19 @@ public class Menu {
     final String OPTIONFIVE = "5";
     final String OPTIONSIX = "6";
     final String OPTIONSEVEN = "7";
-    final String PRINTALLOPTION = "printAllOption";
-    final String INVALIDDATA = "invalidData";
-    final String MENUOPTION = "menuOption";
 
     Scanner scanner = new Scanner(System.in);
-    EnrolmentManager enrolmentManager = new EnrolmentManager();
+    EnrollmentManager enrolmentManager = new EnrollmentManager();
+    String option, optionData, semester;
+    Student student;
+    Course course;
 
     public void printMenu(){
-        String option, optionData, semester;
-        Student student;
-        Course course;
         System.out.println("Enter file csv");
         enrolmentManager.readData(scanner.nextLine());
         
         do{
-            enrolmentManager.printInfo(MENUOPTION);
+            enrolmentManager.printInfo(enrolmentManager.MENUOPTION);
             option = scanner.nextLine();
             switch (option) {
                 case OPTIONONE:
@@ -37,7 +34,7 @@ public class Menu {
                 case OPTIONTWO:
                     student = enrolmentManager.getInputStudent();
                     semester = enrolmentManager.getInputSemester();
-                    if(enrolmentManager.isExistInEnrolmentList(student, semester)){
+                    if(enrolmentManager.isExistInEnrollmentList(student, semester)){
                         enrolmentManager.printInfo(enrolmentManager.ADDORDELETE);
                         String opt;
                         do{
@@ -60,7 +57,7 @@ public class Menu {
                         } while (!opt.equals(OPTIONONE) &&
                                 !opt.equals(OPTIONTWO));
                     } else {
-                        enrolmentManager.printInfo(INVALIDDATA);
+                        enrolmentManager.printInfo(enrolmentManager.INVALIDDATA);
                     }
                     break;
                 case OPTIONTHREE:
@@ -83,7 +80,7 @@ public class Menu {
                     enrolmentManager.getAll();
                     break;
                 case OPTIONSIX:
-                    enrolmentManager.printInfo(PRINTALLOPTION);
+                    enrolmentManager.printInfo(enrolmentManager.PRINTALLOPTION);
                     optionData = scanner.nextLine();
                     do{
                         switch (optionData) {
@@ -119,7 +116,7 @@ public class Menu {
                     System.exit(0);
                     break;
                 default:
-                    enrolmentManager.printInfo(INVALIDDATA);
+                    enrolmentManager.printInfo(enrolmentManager.INVALIDDATA);
                     break;
             }
         } while(!option.equals(OPTIONONE) &&
