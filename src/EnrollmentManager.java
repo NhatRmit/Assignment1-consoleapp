@@ -25,44 +25,22 @@ class EnrollmentManager implements StudentEnrollmentManager {
     private ArrayList<Course> courseList = new ArrayList<>();
     private ArrayList<StudentEnrollment> enrollmentList = new ArrayList<>();
 
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
 
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     public ArrayList<StudentEnrollment> getEnrollmentList() {
         return enrollmentList;
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to check duplicate student and course before adding into array list
+     * @param Object
+     * @return a boolean
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public boolean isNotDuplicated(Object object) {
@@ -83,10 +61,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function takes a csv file to get all data and split it into 3 arraylist (enrolmentlist, studentlist, courselist)
+     * @param String 
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void readData(String filecsv) {
@@ -114,10 +91,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function contains most of the print line information
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void printInfo(String option) {
@@ -157,10 +133,10 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc to check if that enrollment is already or not yet enrolled
+     * @param Student
+     * @param String
+     * @return a boolean
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public boolean isExistInEnrollmentList(Student student, String semester) {
@@ -179,10 +155,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc get the courseID to check if the course is exist
+     * @param String
+     * @return a Course
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public Course verifyCourse(String courseID) {
@@ -195,10 +170,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc get the studentID to check if the student is exist
+     * @param String
+     * @return a Student
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public Student verifyStudent(String studentID) {
@@ -211,10 +185,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a loop to allow user to re write if the studentID they input is incorrect form
+     * @param none
+     * @return a Student
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public Student getInputStudent() {
@@ -229,10 +202,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a loop to allow user to re write if the courseID they input is incorrect form
+     * @param none
+     * @return a Course
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public Course getInputCourse() {
@@ -247,10 +219,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a loop to allow user to re write if the the semester they input is incorrect
+     * @param none 
+     * @return a String
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public String getInputSemester() {
@@ -263,10 +234,11 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to add a new course for a student in a particular semester
+     * @param Student
+     * @param Course
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     @Override
@@ -280,10 +252,12 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to update an enrollment, add new or delete old one
+     * @param Student
+     * @param Course
+     * @param String
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     @Override
@@ -298,14 +272,14 @@ class EnrollmentManager implements StudentEnrollmentManager {
             default:
                 break;
         }
-
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to delete an available enrollment in the list
+     * @param Student
+     * @param Course
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     @Override
@@ -320,10 +294,11 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to get one specific enrollment of a a student in 1 semester
+     * @param Student
+     * @param Course
+     * @param String
+     * @return a StudentEnrollment
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     @Override
@@ -339,10 +314,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to get a full list of enrollment
+     * @param none
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     @Override
@@ -353,10 +327,10 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to show all students in a course in a semester and save it to the csv
+     * @param Course
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void printAllStudInCouInSem(Course course, String semester) {
@@ -373,10 +347,10 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function of all the courses of a student in a semester and save it to csv
+     * @param Student
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void printAllCouOfStudInSem(Student student, String semester) {
@@ -393,10 +367,9 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to show all the courses offered in a semester
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void printAllCouOfferedInSem(String semester) {
@@ -414,10 +387,11 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to save a list into a csv for all students in course in semester
+     * @param ArrayList<Student> 
+     * @param Course
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void convertAllStudInCouInSemCSV(ArrayList<Student> studentPrint, Course course, String semester) {
@@ -445,10 +419,11 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to save a list into a csv for all courses of student in semester
+     * @param ArrayList<Course>
+     * @param Student
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void convertAllCouOfStudInSemCSV(ArrayList<Course> coursePrint, Student student, String semester) {
@@ -480,10 +455,10 @@ class EnrollmentManager implements StudentEnrollmentManager {
     }
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a function to save a list into a csv for all courses offered in semester
+     * @param ArrayList<Course>
+     * @param String
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void convertAllCouOfferedInSemCSV(ArrayList<Course> course, String semester) {

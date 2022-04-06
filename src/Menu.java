@@ -16,10 +16,9 @@ public class Menu {
     Course course;
     
     /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
+     * @desc a menu when starts the program (a menu has 7 options)
+     * @param none
+     * @return none
      * @author Nguyen Hoang Minh Nhat - s3765963
      */
     public void printMenu(){

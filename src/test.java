@@ -7,25 +7,11 @@ import java.io.FileNotFoundException;
 class EnrollmentManagerTest {
     private static EnrollmentManager enrollment = new EnrollmentManager();
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     @BeforeAll
     static void beforeAll() throws FileNotFoundException {
         enrollment.readData("default");
     }
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     @Test
     void testAdd() {
         System.out.println("Test Add");
@@ -51,13 +37,6 @@ class EnrollmentManagerTest {
         Assertions.assertEquals(false, !enrollment.getEnrollmentList().contains(se));
     }
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     @Test
     void testUpdate() {
         System.out.println("Test Update");
@@ -104,13 +83,6 @@ class EnrollmentManagerTest {
 
     }
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     @Test
     void testDelete() {
         System.out.println("Test Delete");
@@ -135,14 +107,7 @@ class EnrollmentManagerTest {
         enrollment.delete(enrollment.verifyStudent(studentID), enrollment.verifyCourse(courseID), semester);
         Assertions.assertEquals(false, enrollment.getEnrollmentList().contains(se));
     }
-    
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
+
     @Test
     void testGetOne() {
         System.out.println("Test Get One");
@@ -168,13 +133,6 @@ class EnrollmentManagerTest {
         Assertions.assertEquals(false, enrollment.getEnrollmentList().contains(se));
     }
     
-    /**
-     * @desc 
-     * @param 
-     * @param 
-     * @return 
-     * @author Nguyen Hoang Minh Nhat - s3765963
-     */
     @Test
     void testGetAll() {
     }
